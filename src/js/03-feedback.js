@@ -21,13 +21,13 @@ if (loadedObj) {
 }
 
 function onFormClick(evt) {
-  // try {
-  formObj = {
-    email: evt.currentTarget.email.value,
-    message: evt.currentTarget.message.value,
-  };
-  save('feedback-form-state', formObj);
-  // } catch {}
+  if (evt.currentTarget !== null) {
+    formObj = {
+      email: evt.currentTarget.email.value,
+      message: evt.currentTarget.message.value,
+    };
+    save('feedback-form-state', formObj);
+  }
 }
 
 function onSubmit(evt) {
