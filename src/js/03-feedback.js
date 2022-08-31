@@ -2,7 +2,6 @@ import throttle from 'lodash.throttle';
 
 import { save, load, remove } from './storage';
 
-let formObj = null;
 const refs = {
   formEl: document.querySelector('.feedback-form'),
 };
@@ -12,31 +11,26 @@ refs.formEl.addEventListener('submit', onSubmit);
 
 const loadedObj = load('feedback-form-state');
 if (loadedObj) {
-  refs.formEl.email.value = loadedObj.email;
-  refs.formEl.message.value = loadedObj.message;
-  formObj = {
-    email: loadedObj.email,
-    message: loadedObj.message,
-  };
+  Object.entries(loadedObj).forEach(([name, value]) => {
+    refs.formEl.elements[name].value = value;
+  });
 }
 
 function onFormClick(evt) {
-  if (evt.currentTarget !== null) {
-    formObj = {
-      email: evt.currentTarget.email.value,
-      message: evt.currentTarget.message.value,
-    };
-    save('feedback-form-state', formObj);
-  }
+  const { name, value } = evt.target;
+  let formObj = load('feedback-form-state');
+  formObj = formObj || {};
+  formObj[name] = value;
+  save('feedback-form-state', formObj);
 }
 
 function onSubmit(evt) {
   evt.preventDefault();
 
+  let formObj = load('feedback-form-state');
   if (formObj) {
     console.log(formObj);
     evt.currentTarget.reset();
     remove('feedback-form-state');
-    formObj = null;
   }
 }
