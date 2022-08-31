@@ -10,13 +10,13 @@ const refs = {
 refs.formEl.addEventListener('input', throttle(onFormClick, 500));
 refs.formEl.addEventListener('submit', onSubmit);
 
-const { email, message } = load('feedback-form-state');
-if ({}) {
-  refs.formEl.email.value = email;
-  refs.formEl.message.value = message;
+const loadedObj = load('feedback-form-state');
+if (loadedObj) {
+  refs.formEl.email.value = loadedObj.email;
+  refs.formEl.message.value = loadedObj.message;
   formObj = {
-    email,
-    message,
+    email: loadedObj.email,
+    message: loadedObj.message,
   };
 }
 
