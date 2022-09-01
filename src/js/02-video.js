@@ -6,7 +6,10 @@ import { save, load } from './storage';
 const iframe = document.querySelector('iframe');
 const player = new Vimeo(iframe);
 
-player.setCurrentTime(load('videoplayer-current-time'));
+const currentTimeofVideo = load('videoplayer-current-time');
+if (currentTimeofVideo) {
+  player.setCurrentTime(load('videoplayer-current-time'));
+}
 
 player.on(
   'timeupdate',
